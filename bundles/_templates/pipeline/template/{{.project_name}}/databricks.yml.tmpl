@@ -12,12 +12,12 @@ targets:
     mode: development
     default: true
     workspace:
-      host: ${var.host_dev}
+      host: {{workspace_host}}
 
   prod:
     mode: production
     workspace:
-      host: ${var.host_prod}
+      host: {{workspace_host}}
       root_path: /Shared/.bundle/prod/${bundle.name}
     run_as:
-      service_principal_name: ${var.service_principal_name}
+      service_principal_name: "github-actions"

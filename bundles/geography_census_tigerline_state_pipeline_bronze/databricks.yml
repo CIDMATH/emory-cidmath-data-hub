@@ -12,12 +12,12 @@ targets:
     mode: development
     default: true
     workspace:
-      host: ${var.host_dev}
+      host: https://dbc-926acb48-1c75.cloud.databricks.com
 
   prod:
     mode: production
     workspace:
-      host: ${var.host_prod}
+      host: https://dbc-926acb48-1c75.cloud.databricks.com
       root_path: /Shared/.bundle/prod/${bundle.name}
     run_as:
-      service_principal_name: ${var.service_principal_name}
+      service_principal_name: "github-actions"

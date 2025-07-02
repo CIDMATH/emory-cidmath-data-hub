@@ -23,14 +23,9 @@ jobs:
       
       - uses: databricks/setup-cli@main
 
-      - run: |
-          databricks bundle validate \
-            --target prod \
-            --env-file ../../config/variables.env \
-            --var host_prod=${{ secrets.DATABRICKS_HOST }} \
-            --var host_dev=${{ secrets.DATABRICKS_HOST }}
+      - run: databricks bundle validate --target prod
         env:
-          DATABRICKS_HOST: ${{ secrets.DATABRICKS_HOST }}
+          DATABRICKS_HOST: ${{ vars.DATABRICKS_HOST }}
           DATABRICKS_CLIENT_ID: ${{ secrets.DATABRICKS_CLIENT_ID }}
           DATABRICKS_CLIENT_SECRET: ${{ secrets.DATABRICKS_CLIENT_SECRET }}
 
@@ -51,13 +46,8 @@ jobs:
       - uses: databricks/setup-cli@main
 
       - name: Deploy bundle
-        run: |
-          databricks bundle deploy \
-          --target prod \
-          --env-file ../../config/variables.env \
-          --var host_prod=${{ secrets.DATABRICKS_HOST }} \
-          --var host_dev=${{ secrets.DATABRICKS_HOST }}
+        run: databricks bundle deploy --target prod
         env:
-          DATABRICKS_HOST: ${{ secrets.DATABRICKS_HOST }}
+          DATABRICKS_HOST: ${{ vars.DATABRICKS_HOST }}
           DATABRICKS_CLIENT_ID: ${{ secrets.DATABRICKS_CLIENT_ID }}
           DATABRICKS_CLIENT_SECRET: ${{ secrets.DATABRICKS_CLIENT_SECRET }}
