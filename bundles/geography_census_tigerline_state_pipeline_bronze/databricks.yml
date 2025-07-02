@@ -1,0 +1,23 @@
+# This is a Databricks asset bundle definition for geography_census_tigerline_state_pipeline_bronze.
+# See https://docs.databricks.com/dev-tools/bundles/index.html for documentation.
+bundle:
+  name: geography_census_tigerline_state_pipeline_bronze
+
+include:
+  - resources/*.yml
+
+targets:
+  # The deployment targets. See https://docs.databricks.com/en/dev-tools/bundles/deployment-modes.html
+  dev:
+    mode: development
+    default: true
+    workspace:
+      host: ${var.host_dev}
+
+  prod:
+    mode: production
+    workspace:
+      host: ${var.host_prod}
+      root_path: /Shared/.bundle/prod/${bundle.name}
+    run_as:
+      service_principal_name: ${var.service_principal_name}

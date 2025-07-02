@@ -1,0 +1,19 @@
+# geography_census_tigerline_state_pipeline_bronze.yml
+# The geography_census_tigerline_state_pipeline_bronze pipeline
+
+resources:
+  pipelines:
+    geography_census_tigerline_state_pipeline_bronze:
+      name: geography_census_tigerline_state_pipeline_bronze
+      clusters:
+        - label: default
+          node_type_id: ${var.node_type_very_small}
+          autoscale:
+            min_workers: 1
+            max_workers: 5
+            mode: ENHANCED
+      libraries:
+        - notebook:
+            path: ../src/geography_census_tigerline_state_pipeline_bronze.ipynb
+      schema: ${var.schema}
+      catalog: ${var.catalog}

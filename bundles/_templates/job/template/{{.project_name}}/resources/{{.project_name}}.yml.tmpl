@@ -1,0 +1,19 @@
+# pipeline_{{.project_name}}.yml
+# The {{.project_name}} pipeline
+
+resources:
+  pipelines:
+    pipeline_{{.project_name}}:
+      name: {{.project_name}}
+      clusters:
+        - label: default
+          node_type_id: r5d.large
+          autoscale:
+            min_workers: 1
+            max_workers: 5
+            mode: ENHANCED
+      libraries:
+        - notebook:
+            path: ../src/{{.project_name}}.ipynb
+      schema: geography
+      catalog: emory_cidmath_data_hub

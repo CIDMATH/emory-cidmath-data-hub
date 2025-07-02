@@ -1,0 +1,63 @@
+name: geography_census_tigerline_state_pipeline_bronze
+
+concurrency: 1
+
+on:
+  workflow_dispatch:
+
+  push:
+    branches:
+      - main
+
+jobs:
+  validate:
+    name: "Test code and bundle"
+    runs-on: ubuntu-latest
+    environment: prod
+    defaults:
+      run:
+        working-directory: ./bundles/{{.project_name}}
+  
+    steps:
+      - uses: actions/checkout@v3
+      
+      - uses: databricks/setup-cli@main
+
+      - run: |
+          databricks bundle validate \
+            --target prod \
+            --env-file ../../config/variables.env \
+            --var host_prod=${{"{{ secrets.DATABRICKS_HOST }}"}} \
+            --var host_dev=${{"{{ secrets.DATABRICKS_HOST }}"}}
+        env:
+          DATABRICKS_HOST: ${{"{{ secrets.DATABRICKS_HOST }}"}}
+          DATABRICKS_CLIENT_ID: ${{"{{ secrets.DATABRICKS_CLIENT_ID }}"}}
+          DATABRICKS_CLIENT_SECRET: ${{"{{ secrets.DATABRICKS_CLIENT_SECRET }}"}}
+
+  deploy:
+    name: "Run deploy"
+    runs-on: ubuntu-latest
+    environment: prod
+    defaults:
+      run:
+        working-directory: ./bundles/{{.project_name}}
+
+    needs:
+      - validate
+
+    steps:
+      - uses: actions/checkout@v3
+
+      - uses: databricks/setup-cli@main
+
+      - name: Deploy bundle
+        run: |
+          databricks bundle deploy \
+          --target prod \
+          --env-file ../../config/variables.env \
+          --var host_prod=${{"{{ secrets.DATABRICKS_HOST }}"}} \
+          --var host_dev=${{"{{ secrets.DATABRICKS_HOST }}"}}
+        env:
+          DATABRICKS_HOST: ${{"{{ secrets.DATABRICKS_HOST }}"}}
+          DATABRICKS_CLIENT_ID: ${{"{{ secrets.DATABRICKS_CLIENT_ID }}"}}
+          DATABRICKS_CLIENT_SECRET: ${{"{{ secrets.DATABRICKS_CLIENT_SECRET }}"}}
