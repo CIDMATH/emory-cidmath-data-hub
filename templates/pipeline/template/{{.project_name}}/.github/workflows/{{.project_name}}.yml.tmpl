@@ -1,0 +1,53 @@
+name: {{.project_name}}
+
+concurrency: 1
+
+on:
+  workflow_dispatch:
+
+  push:
+    branches:
+      - main
+
+jobs:
+  validate:
+    name: "Test code and bundle"
+    runs-on: ubuntu-latest
+    environment: prod
+    defaults:
+      run:
+        working-directory: ./bundles/geography/{{.project_name}}
+  
+    steps:
+      - uses: actions/checkout@v3
+      
+      - uses: databricks/setup-cli@main
+
+      - run: databricks bundle validate --target prod
+        env:
+          DATABRICKS_HOST: ${{"{{ vars.DATABRICKS_HOST }}"}}
+          DATABRICKS_CLIENT_ID: ${{"{{ secrets.DATABRICKS_CLIENT_ID }}"}}
+          DATABRICKS_CLIENT_SECRET: ${{"{{ secrets.DATABRICKS_CLIENT_SECRET }}"}}
+
+  deploy:
+    name: "Run deploy"
+    runs-on: ubuntu-latest
+    environment: prod
+    defaults:
+      run:
+        working-directory: ./bundles/geography/{{.project_name}}
+
+    needs:
+      - validate
+
+    steps:
+      - uses: actions/checkout@v3
+
+      - uses: databricks/setup-cli@main
+
+      - name: Deploy bundle
+        run: databricks bundle deploy --target prod
+        env:
+          DATABRICKS_HOST: ${{"{{ vars.DATABRICKS_HOST }}"}}
+          DATABRICKS_CLIENT_ID: ${{"{{ secrets.DATABRICKS_CLIENT_ID }}"}}
+          DATABRICKS_CLIENT_SECRET: ${{"{{ secrets.DATABRICKS_CLIENT_SECRET }}"}}

@@ -1,0 +1,15 @@
+# variables_pipeline_compute.yml
+# Compute settings for Databricks Lakeflow Declarative Pipelines
+# Reference: https://docs.databricks.com/aws/en/dev-tools/bundles/resources#pipelines
+
+variables:
+  serverless: 
+    default: false
+  single_node_cluster_config:
+    type: complex
+    default:
+      node_type_id: r5d.large
+      autoscale:
+          min_workers: 1
+          max_workers: 2
+          mode: ENHANCED

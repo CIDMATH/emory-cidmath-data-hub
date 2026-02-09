@@ -1,0 +1,9 @@
+# dev.yml
+# The {{.project_name}} bundle target environment for development
+
+targets:
+  # The deployment targets. See https://docs.databricks.com/en/dev-tools/bundles/deployment-modes.html
+  dev:
+    mode: development
+    workspace:
+      host: {{workspace_host}}

@@ -1,4 +1,4 @@
-name: geography_census_tigerline_state_pipeline_bronze
+name: {{.project_name}}
 
 concurrency: 1
 
@@ -16,7 +16,7 @@ jobs:
     environment: prod
     defaults:
       run:
-        working-directory: ./bundles/{{.project_name}}
+        working-directory: ./bundles/geography/{{.project_name}}
   
     steps:
       - uses: actions/checkout@v3
@@ -35,7 +35,7 @@ jobs:
     environment: prod
     defaults:
       run:
-        working-directory: ./bundles/{{.project_name}}
+        working-directory: ./bundles/geography/{{.project_name}}
 
     needs:
       - validate

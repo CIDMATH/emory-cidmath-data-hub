@@ -1,0 +1,13 @@
+# variables_pipeline_general.yml
+# General settings for Databricks Lakeflow Declarative Pipelines
+# Reference: https://docs.databricks.com/aws/en/dev-tools/bundles/resources#pipelines
+
+variables:
+  service_principal_name:
+    default: github-actions
+  can_view_group:
+    default: users
+  can_manage_group: 
+    default: admins
+  is_owner_service_principal: 
+    default: ${var.service_principal_name}

@@ -1,0 +1,29 @@
+# {{.project_name}}.yml
+# The {{.project_name}} pipeline
+
+resources:
+  pipelines:
+    {{.project_name}}:
+      name: {{.project_name}}
+      allow_duplicate_names: ${var.allow_duplicate_names}
+      development: ${var.development}
+      channel: ${var.channel}
+      edition: ${var.edition}
+      photon: ${var.photon}
+      continuous: ${var.continuous}
+      serverless: ${var.serverless}
+      clusters: ${var.single_node_cluster_config}
+      libraries:
+        - notebook:
+            path: ${var.src_path}
+      configuration:
+        var.volume_path: ${workspace.volume_path}
+      catalog: ${var.catalog}
+      schema: ${var.schema}
+      permissions:
+        - group_name: ${var.can_view_group}
+          level: CAN_VIEW
+        - group_name: ${var.can_manage_group}
+          level: CAN_MANAGE
+        - service_principal_name: ${var.is_owner_service_principal} 
+          level: IS_OWNER
