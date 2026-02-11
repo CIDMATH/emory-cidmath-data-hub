@@ -1,0 +1,39 @@
+# marketscan_etl_job.yml
+# The marketscan_etl_job pipeline
+
+resources:
+  jobs:
+    marketscan_etl_job:
+      name: marketscan_etl_job
+      schedule:
+        quartz_cron_expression: 46 0 2 * * ?
+        timezone_id: America/New_York
+        pause_status: UNPAUSED
+      tasks:
+        - task_key: process_ccaemdcr
+          spark_python_task:
+            python_file: ../src/process_ccaemdcr.py
+          environment_key: Default
+        - task_key: process_dental
+          spark_python_task:
+            python_file: ../src/process_dental.py
+          environment_key: Default
+        - task_key: process_lab
+          spark_python_task:
+            python_file: ../src/process_lab.py
+          environment_key: Default
+        - task_key: process_mdcd
+          spark_python_task:
+            python_file: ../src/process_mdcd.py
+          environment_key: Default
+        - task_key: process_national_weights
+          spark_python_task:
+            python_file: ../src/process_national_weights.py
+          environment_key: Default
+      queue:
+        enabled: true
+      environments:
+        - environment_key: Default
+          spec:
+            environment_version: "4"
+      performance_target: PERFORMANCE_OPTIMIZED
