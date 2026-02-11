@@ -1,4 +1,4 @@
-name: geography_census_tigerline_state_pipeline_bronze
+name: marketscan_etl_job
 
 concurrency: 1
 
@@ -16,7 +16,7 @@ jobs:
     environment: prod
     defaults:
       run:
-        working-directory: ./bundles/geography/geography_census_tigerline_state_pipeline_bronze
+        working-directory: ./bundles/marketscan/marketscan_etl_job
   
     steps:
       - uses: actions/checkout@v3
@@ -35,7 +35,7 @@ jobs:
     environment: prod
     defaults:
       run:
-        working-directory: ./bundles/geography/geography_census_tigerline_state_pipeline_bronze
+        working-directory: ./bundles/marketscan/marketscan_etl_job
 
     needs:
       - validate
