@@ -1,0 +1,39 @@
+# marketscan_etl.yml
+# The marketscan_etl pipeline
+
+resources:
+  jobs:
+    Marketscan_ETL:
+      name: Marketscan ETL
+      schedule:
+        quartz_cron_expression: 46 0 2 * * ?
+        timezone_id: America/New_York
+        pause_status: UNPAUSED
+      tasks:
+        - task_key: process_ccaemdcr
+          spark_python_task:
+            python_file: /Workspace/Users/machi.shiiba@emory.edu/Marketscan-data-ingestion/process_ccaemdcr.py
+          environment_key: Default
+        - task_key: process_dental
+          spark_python_task:
+            python_file: /Workspace/Users/machi.shiiba@emory.edu/Marketscan-data-ingestion/process_dental.py
+          environment_key: Default
+        - task_key: process_lab
+          spark_python_task:
+            python_file: /Workspace/Users/machi.shiiba@emory.edu/Marketscan-data-ingestion/process_lab.py
+          environment_key: Default
+        - task_key: process_mdcd
+          spark_python_task:
+            python_file: /Workspace/Users/machi.shiiba@emory.edu/Marketscan-data-ingestion/process_mdcd.py
+          environment_key: Default
+        - task_key: process_national_weights
+          spark_python_task:
+            python_file: /Workspace/Users/machi.shiiba@emory.edu/Marketscan-data-ingestion/process_national_weights.py
+          environment_key: Default
+      queue:
+        enabled: true
+      environments:
+        - environment_key: Default
+          spec:
+            environment_version: "4"
+      performance_target: PERFORMANCE_OPTIMIZED

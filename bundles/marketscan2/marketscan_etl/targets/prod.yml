@@ -1,0 +1,11 @@
+# prod.yml
+# The marketscan_etl bundle target for production
+
+targets:
+  # The deployment targets. See https://docs.databricks.com/en/dev-tools/bundles/deployment-modes.html
+  prod:
+    mode: production
+    default: true
+    workspace:
+      host: https://dbc-926acb48-1c75.cloud.databricks.com
+      root_path: /Shared/.bundle/prod/${bundle.name}
