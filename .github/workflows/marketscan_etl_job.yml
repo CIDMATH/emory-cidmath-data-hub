@@ -1,4 +1,4 @@
-name: marketscan_etl
+name: marketscan_etl_job
 
 concurrency: 1
 
@@ -16,7 +16,7 @@ jobs:
     environment: prod
     defaults:
       run:
-        working-directory: ./bundles/marketscan2/marketscan_etl
+        working-directory: ./bundles/geography/marketscan_etl_job
   
     steps:
       - uses: actions/checkout@v3
@@ -35,7 +35,7 @@ jobs:
     environment: prod
     defaults:
       run:
-        working-directory: ./bundles/marketscan2/marketscan_etl
+        working-directory: ./bundles/geography/marketscan_etl_job
 
     needs:
       - validate
