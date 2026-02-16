@@ -8,6 +8,9 @@ on:
   push:
     branches:
       - main
+    paths:
+      - 'bundles/marketscan/marketscan_etl_job/**'
+      - '.github/workflows/marketscan_etl_job.yml'
 
 jobs:
   validate:
