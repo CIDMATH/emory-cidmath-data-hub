@@ -1,0 +1,8 @@
+# This is a Databricks asset bundle definition for marketscan_year.
+# See https://docs.databricks.com/dev-tools/bundles/index.html for documentation.
+bundle:
+  name: marketscan_year
+
+include:
+  - resources/*.yml
+  - targets/*.yml

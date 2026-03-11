@@ -1,0 +1,20 @@
+# marketscan_year.yml
+# The marketscan_year pipeline
+
+resources:
+  jobs:
+    Marketscan_combine_tables:
+      name: Marketscan-combine-tables
+      tasks:
+        - task_key: Combine-years
+          notebook_task:
+            notebook_path: /Workspace/Users/machi.shiiba@emory.edu/Marketscan-combine-tables/Draft_marketscan_table_combine_year
+            source: WORKSPACE
+          environment_key: Default
+      queue:
+        enabled: true
+      environments:
+        - environment_key: Default
+          spec:
+            environment_version: "4"
+      performance_target: PERFORMANCE_OPTIMIZED
